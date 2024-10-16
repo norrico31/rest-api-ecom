@@ -39,4 +39,4 @@ func initStorage(db *sql.DB) {
 	log.Println("DB: Successfully connected!")
 }
 
-// 18:55
+// 48:31

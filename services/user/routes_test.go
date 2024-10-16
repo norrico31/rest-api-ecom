@@ -31,6 +31,7 @@ func TestUserServiceHandlers(t *testing.T) {
 
 		rr := httptest.NewRecorder()
 		router := mux.NewRouter()
+
 		router.HandleFunc("/register", handler.handleRegister)
 		router.ServeHTTP(rr, req)
 
@@ -39,28 +40,28 @@ func TestUserServiceHandlers(t *testing.T) {
 		}
 	})
 
-	// t.Run("should correctly register the user", func(t *testing.T) {
-	// 	payload := types.UserRegisterPayload{
-	// 		FirstName: "gerald",
-	// 		LastName:  "mendones",
-	// 		Email:     "test@123gmail.com",
-	// 		Password:  "testing.123",
-	// 	}
-	// 	marshalled, _ := json.Marshal(payload)
-	// 	req, err := http.NewRequest(http.MethodPost, "/register", bytes.NewBuffer(marshalled))
-	// 	if err != nil {
-	// 		t.Fatal(err)
-	// 	}
+	t.Run("should correctly register the user", func(t *testing.T) {
+		payload := types.UserRegisterPayload{
+			FirstName: "gerald",
+			LastName:  "mendones",
+			Email:     "valid123@gmail.com",
+			Password:  "testing.123",
+		}
+		marshalled, _ := json.Marshal(payload)
+		req, err := http.NewRequest(http.MethodPost, "/register", bytes.NewBuffer(marshalled))
+		if err != nil {
+			t.Fatal(err)
+		}
 
-	// 	rr := httptest.NewRecorder()
-	// 	router := mux.NewRouter()
-	// 	router.HandleFunc("/register", handler.handleRegister)
-	// 	router.ServeHTTP(rr, req)
+		rr := httptest.NewRecorder()
+		router := mux.NewRouter()
+		router.HandleFunc("/register", handler.handleRegister)
+		router.ServeHTTP(rr, req)
 
-	// 	if rr.Code != http.StatusCreated {
-	// 		t.Errorf("expected status code %d, got %d", http.StatusCreated, rr.Code)
-	// 	}
-	// })
+		if rr.Code != http.StatusCreated {
+			t.Errorf("expected status code %d, got %d", http.StatusCreated, rr.Code)
+		}
+	})
 }
 
 type mockUserStore struct {
