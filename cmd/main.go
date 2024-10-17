@@ -38,3 +38,5 @@ func initStorage(db *sql.DB) {
 	}
 	log.Println("DB: Successfully connected!")
 }
+
+// 1:06:49
