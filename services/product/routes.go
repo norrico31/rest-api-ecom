@@ -69,11 +69,11 @@ func (h *Handler) handleCreateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.store.CreateProduct(payload)
+	product, err := h.store.CreateProduct(payload)
 	if err != nil {
 		utils.WriteError(w, http.StatusInternalServerError, err)
 		return
 	}
 
-	utils.WriteJSON(w, http.StatusOK, payload)
+	utils.WriteJSON(w, http.StatusOK, product)
 }

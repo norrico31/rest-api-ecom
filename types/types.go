@@ -33,7 +33,7 @@ type ProductStore interface {
 	GetProducts() ([]Product, error)
 	GetProductsById(int []int) ([]Product, error)
 	GetProduct(id int) (Product, error)
-	CreateProduct(ProductCreatePayload) error
+	CreateProduct(ProductCreatePayload) (*Product, error)
 	UpdateProduct(Product) error
 }
 
