@@ -17,3 +17,7 @@ func NewStore(db *sql.DB) *Store {
 func (s *Store) GetProducts() ([]types.Product, error) {
 	return nil, nil
 }
+
+func (s *Store) GetProduct(productId int) (types.Product, error) {
+	return nil, nil
+}
