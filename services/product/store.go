@@ -106,6 +106,39 @@ func (s *Store) CreateProduct(payload types.ProductCreatePayload) (*types.Produc
 	return product, nil
 }
 
+func (s *Store) UpdateProduct(payload types.Product) (*types.Product, error) {
+	if payload.ID == 0 {
+		return nil, fmt.Errorf("invalid product ID")
+	}
+	if payload.Name == "" {
+		return nil, fmt.Errorf("product name cannot be empty")
+	}
+	if payload.Price <= 0 {
+		return nil, fmt.Errorf("product price must be greater than zero")
+	}
+	if payload.Qty < 0 {
+		return nil, fmt.Errorf("product quantity cannot be negative")
+	}
+	res, err := s.db.Exec("UPDATE products SET name = ?, price = ?, image = ?, description = ?, qty = ? WHERE id = ?", payload.Name, payload.Price, payload.Image, payload.Description, payload.Qty, payload.ID)
+	if err != nil {
+		return nil, err
+	}
+	lastInsertedId, err := res.LastInsertId()
+	if err != nil {
+		return nil, err
+	}
+	updatedProduct := &types.Product{
+		ID:          int(lastInsertedId),
+		Name:        payload.Name,
+		Price:       payload.Price,
+		Image:       payload.Image,
+		Description: payload.Description,
+		Qty:         payload.Qty,
+	}
+
+	return updatedProduct, nil
+}
+
 func scanRowIntoProduct(rows *sql.Rows, product *types.Product) error {
 	return rows.Scan(
 		&product.ID,
