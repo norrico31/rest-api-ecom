@@ -31,7 +31,18 @@ type UserLoginPayload struct {
 
 type ProductStore interface {
 	GetProducts() ([]Product, error)
+	GetProductsById(int []int) ([]Product, error)
 	GetProduct(id int) (Product, error)
+	CreateProduct(ProductCreatePayload) error
+	UpdateProduct(Product) error
+}
+
+type ProductCreatePayload struct {
+	Name        string  `json:"name" validate:"required"`
+	Description string  `json:"description"`
+	Image       string  `json:"image"`
+	Price       float64 `json:"price" validate:"required"`
+	Qty         int     `json:"qty" validate:"required"`
 }
 
 type Product struct {
